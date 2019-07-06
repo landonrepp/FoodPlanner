@@ -37,10 +37,8 @@ class dbManager:
         finally:
             return conn
             conn.close()
-    def create_tables():
-
-
-    conn = create_connection("sqlite.db")
-    cur = conn.cursor()
-    # create schema
+    def create_tables(self):
+        self.cur.execute(ingredients)
+        self.cur.execute(meals)
+        self.cur.execute(recipies)
     

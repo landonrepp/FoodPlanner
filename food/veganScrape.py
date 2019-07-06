@@ -28,13 +28,14 @@ for i in hrefs:
             if "/en/" in j.get('href') and 'base' not in j.get('href'):
                 recipes.append(j.get('href'))
 
-tbls = []
+tbls = {}
 for i in recipes:
     response = requests.get(i)
     soup = bs(response.text)
+    test = json.dumps(tbls)
     tbl = soup.find("div",{"class":"zurreck-recipes-ingredients"})
     if tbl is not None:
-        tbls.append(tbl)
+        tbls[i]=str(tbl)
 
-with open("tables","w") as mf:
-    mf.write(str(tbls))
+with open("tables.json","w") as mf:
+    mf.write(json.dumps(tbls))
