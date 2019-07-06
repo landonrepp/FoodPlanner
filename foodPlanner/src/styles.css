@@ -1,4 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+:root {
+    --primary-color:aqua;
+    --background-color: #e5e5e5;
+    --text-color: #2d2d2d; 
+    --secondary-color:green;
+  }
 .primary-color{
-    background-color: aqua;
+    background-color: var(--primary-color);
+}
+.secondary-color{
+    background-color:var(--secondary-color);
+}
+
+.line-items li{
+    text-decoration: none;
+    display:block;
+    padding-bottom: 7px;
+    border-bottom: 1px solid;
+    padding-left:0;
+    margin-left: 0;
+}
+.line-items :hover{
+    background-color: var(--secondary-color);
+    cursor: pointer;
+
 }
