@@ -1,0 +1,36 @@
+.menu-choices{
+    grid-area: menuChoices;
+}
+.sidebar{
+    height:100%;
+    position: fixed;
+    display: grid;
+    left:0;
+    top:0;
+    grid-template-rows: 30% 40% 30%;
+    grid-template-columns: auto;
+    grid-template-areas: 
+        "."
+        "menuChoices"
+        "."
+}
+.sidebar{
+    font-size: 25px;
+}
+.sidebar div{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+.line-items li :hover{
+    cursor: pointer;
+}
+.account{
+    font-size: 16px !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+.invisible{
+    display:none;
+}
