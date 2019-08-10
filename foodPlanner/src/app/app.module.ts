@@ -5,16 +5,30 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/common/header/header.component';
 import { SidebarComponent } from './components/common/sidebar/sidebar.component';
+import { RouterModule, Routes } from '@angular/router';
+import { MealListComponent } from './components/meal-list/meal-list.component';
+import { MealListLineItemComponent } from './components/meal-list-line-item/meal-list-line-item.component';
+
+const appRoutes: Routes =[
+  { path: 'generate-meals', component: MealListComponent },
+]
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    MealListComponent,
+    MealListLineItemComponent
   ],
   imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    ),
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

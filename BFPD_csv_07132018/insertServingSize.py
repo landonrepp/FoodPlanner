@@ -6,7 +6,7 @@ import pandas as pd
 #                      passwd="Ilike0909",  # your password
 #                      db="Nutrition")        # name of the data base
 
-engine = create_engine('mysql://landonrepp:Ilike0909@34.73.42.170/Nutrition')
+engine = create_engine('mysql://landonrepp:Ilike0909)()(@34.73.42.170/Nutrition')
 
 csv = pd.read_csv("Serving_size.csv")
 
