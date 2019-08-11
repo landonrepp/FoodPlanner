@@ -1,1 +1,19 @@
-<p>meal-list-line-item works!</p>
+<!-- <p>meal-list-line-item works!</p> -->
+
+<div (click) = 'Window.location=this.mealProperty.link' id="mealListGridContainer">
+    <div id = 'recipe'>
+        {{mealProperty["recipe"]}}
+    </div>
+    <div id = 'calories'>
+        Calories:{{mealProperty["calories"]}}
+    </div>
+    <div id = 'carbs'>
+        Carbs:{{mealProperty["carbs"]}}
+    </div>
+    <div id = 'protien'>
+        Protien:{{mealProperty["protien"]}}
+    </div>
+    <div id = 'fat'>
+        Fat:{{mealProperty["fat"]}}
+    </div>
+</div>

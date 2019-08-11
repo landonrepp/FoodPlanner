@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-meal-list-line-item',
@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./meal-list-line-item.component.css']
 })
 export class MealListLineItemComponent implements OnInit {
-
+  @Input() mealProperty: NutritionalInformation;
+  json = JSON;
+  Window = window;
   constructor() { }
 
   ngOnInit() {

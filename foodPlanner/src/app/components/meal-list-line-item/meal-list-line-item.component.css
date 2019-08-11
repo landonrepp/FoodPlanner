@@ -1,0 +1,32 @@
+#recipe{
+    grid-area:recipe;
+    font:24px;
+    font:bold;
+}
+#calories{
+    grid-area:calories;
+}
+#carbs{
+    grid-area:carbs;
+}
+#protien{
+    grid-area:protien;
+}
+#fat{
+    grid-area:fat;
+}
+#mealListGridContainer{
+    background: lightblue;
+    margin-bottom: 20px;
+    padding:10px;
+    display: grid;
+    height:200px;
+    width:500px;
+    grid-template-columns: 50% 10% 40%;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "recipe . calories"
+        "recipe . carbs"
+        ". . protien"
+        ". . fat";
+}
