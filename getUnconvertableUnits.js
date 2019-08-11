@@ -8,7 +8,7 @@ const port = 80;
 const credentials = {
     host: '34.73.42.170',
     user: 'landonrepp',
-    password: 'Ilike0909)()(',
+    password: '',
     database: 'Nutrition'
 }
 let pool = mysql.createPool(credentials);
