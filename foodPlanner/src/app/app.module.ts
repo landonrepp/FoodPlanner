@@ -8,10 +8,12 @@ import { SidebarComponent } from './components/common/sidebar/sidebar.component'
 import { RouterModule, Routes } from '@angular/router';
 import { MealListComponent } from './components/meal-list/meal-list.component';
 import { MealListLineItemComponent } from './components/meal-list-line-item/meal-list-line-item.component';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './components/login/login.component'; 
 
 const appRoutes: Routes =[
-  { path: 'generate-meals', component: MealListComponent }
+  { path: 'generate-meals', component: MealListComponent },
+  { path: 'login', component: LoginComponent }
 ]
 
 @NgModule({
@@ -20,7 +22,8 @@ const appRoutes: Routes =[
     HeaderComponent,
     SidebarComponent,
     MealListComponent,
-    MealListLineItemComponent
+    MealListLineItemComponent,
+    LoginComponent
   ],
   imports: [
     RouterModule.forRoot(

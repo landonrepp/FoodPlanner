@@ -1,1 +1,7 @@
-<app-meal-list-line-item *ngFor="let line of mealProperties" [mealProperty]="line"></app-meal-list-line-item>
+<div class = "dayBox" *ngFor="let data of mealHeirarchy; let i = index">
+    <h1>{{daysOfWeek[i]}}</h1>
+    <div class="meal">
+        <app-meal-list-line-item *ngFor="let line of data" [mealProperty]="line"></app-meal-list-line-item>
+    </div>
+    
+</div>

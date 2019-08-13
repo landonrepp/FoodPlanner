@@ -9,12 +9,15 @@ import { GetNutritionalInformationService, NutritionService } from 'src/app/serv
 })
 export class MealListComponent implements OnInit {
   @Input() mealProperties: NutritionalInformation[] = [];
-
+  mealHeirarchy: NutritionalInformation[][] = [];
   constructor(private http:NutritionService) { }
+  daysOfWeek = ["Sunday","Monday","Tuesday","Wednsday","Thursday","Friday","Saturday"];
   ngOnInit() {
     this.http.getWeeklyMeals().subscribe((results)=>{
       this.mealProperties = results;
-      console.log(this.mealProperties);
+      for(var i = 0; i<results.length; i+=3){
+        this.mealHeirarchy.push(results.slice(i,i+3));
+      }
     });
   }
 
