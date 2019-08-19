@@ -1,0 +1,35 @@
+#username{
+    display:block;
+    width:30%;
+    height:50px;
+    font-size:50px;
+    margin-bottom: 20px;
+}
+#password{
+    display:block;
+    width:30%;
+    height:50px;
+    font-size:50px;
+}
+#loginContainer{
+    width:80%;
+    padding-left:30%;
+    padding-right:30%;
+    text-align: center;
+}
+.button{
+    border-radius: 5px;
+    background-color: lightblue;
+    width:200px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+}
+#loginContainer *{
+    margin: auto;
+}
+.loginIcon{
+    height:280x;
+    width:300px;
+}
