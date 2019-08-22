@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
 
-let url = 'http://api.landonrepp.com/sql/spget';
+let geturl = 'http://api.landonrepp.com/sql/spget';
+let posturl = 'http://api.landonrepp.com/sql/sppost';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +20,7 @@ export class LoginService {
 
   // get line items
   public tryLogin(username:string,password:string): Observable<LoginInformation>{
-    const items: Observable<LoginInformation> = this.http.get<LoginInformation>(`${url}/login`);
+    const items: Observable<LoginInformation> = this.http.get<LoginInformation>(`${geturl}/login`);
     return items;
   }
 

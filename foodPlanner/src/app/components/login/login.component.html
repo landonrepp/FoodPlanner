@@ -1,8 +1,12 @@
 <div id="loginContainer">
     <img class="loginIcon" src="https://www.nationalgeographic.com/content/dam/news/2018/05/17/you-can-train-your-cat/02-cat-training-NationalGeographic_1484324.jpg" />
-    <input type="text" id = "username"/>
-    <input type="password" id = "password"/>
-    <div class = "button">
+
+    <input type="text" id = "username" placeholder="Username"/>
+    <input type="password" id = "password" maxlength="4" pattern="[0-9]*" placeholder="Pin Number"/>
+    <div class = "button" id="login">
         Login
+    </div>
+    <div class = "button" id ="register">
+        Register
     </div>
 </div>
