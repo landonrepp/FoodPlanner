@@ -1,12 +1,19 @@
 #nav{
     grid-area: nav;
-    width:12%;
+    min-width: 100px;
+    
 }
 #content1{
     grid-area: content1;
-    width:77%;
+    height:100vh;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow-y: scroll;
 }
 #gridContainer{
+    margin:0;
     display:grid;
     grid-template-columns: 100%;
     grid-template-rows: 300px auto;
@@ -17,7 +24,7 @@
 @media (min-width:600px) {
     #gridContainer{
         display:grid;
-        grid-template-columns: 12% 1% 77%;
+        grid-template-columns: 200px 1% auto;
         grid-template-rows: auto;
         grid-template-areas: "nav . content1";
     }

@@ -1,0 +1,8 @@
+<div id = "dailyContainer">
+    <div id="meal">
+        <app-meal-list-line-item *ngFor="let line of meals" [mealProperty]="line"></app-meal-list-line-item>
+    </div>
+    <div id="stats">
+        <app-daily-stats [meals] = meals></app-daily-stats>
+    </div>
+</div>

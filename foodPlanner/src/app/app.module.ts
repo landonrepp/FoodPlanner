@@ -9,7 +9,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { MealListComponent } from './components/meal-list/meal-list.component';
 import { MealListLineItemComponent } from './components/meal-list-line-item/meal-list-line-item.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './components/login/login.component'; 
+import { LoginComponent } from './components/login/login.component';
+import { DailyStatsComponent } from './components/daily-stats/daily-stats.component';
+import { DayOfMealsComponent } from './components/day-of-meals/day-of-meals.component'; 
 
 const appRoutes: Routes =[
   { path: 'generate-meals', component: MealListComponent },
@@ -23,7 +25,9 @@ const appRoutes: Routes =[
     SidebarComponent,
     MealListComponent,
     MealListLineItemComponent,
-    LoginComponent
+    LoginComponent,
+    DailyStatsComponent,
+    DayOfMealsComponent
   ],
   imports: [
     RouterModule.forRoot(

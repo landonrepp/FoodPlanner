@@ -1,0 +1,17 @@
+#meal{
+    grid-area: meal;
+    width:100%;
+}
+#stats{
+    grid-area: stats;
+    width:100%;
+    display: block;
+}
+
+#dailyContainer{
+    display: grid;
+    width:100%;
+    grid-template-columns: auto auto;
+    grid-template-rows: 100%;
+    grid-template-areas: "meal stats"
+}
