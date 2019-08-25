@@ -1,16 +1,19 @@
 
 
 :root {
-    --primary-color:aqua;
-    --background-color: #e5e5e5;
+    --primary-color:#F3F3F3;
+    --background-color: #ffffff;
     --text-color: #2d2d2d; 
-    --secondary-color:green;
+    --secondary-color:#2A91E1;
   }
 .primary-color{
     background-color: var(--primary-color);
 }
 .secondary-color{
     background-color:var(--secondary-color);
+}
+.button{
+    background-color: #DCEAF7;
 }
 
 .line-items li{

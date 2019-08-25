@@ -22,12 +22,17 @@
 }
 .sidebar{
     font-size: 25px;
+    border-right: 1px solid lightgray;
 }
 .sidebar div{
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 25px;
     padding-bottom: 25px;
+    text-align: center;
+}
+.sidebar div :nth-child(n+2){
+    border-top:1px solid lightgrey;
 }
 .line-items li :hover{
     cursor: pointer;

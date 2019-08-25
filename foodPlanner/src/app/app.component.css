@@ -11,6 +11,7 @@
     padding-top: 0;
     padding-bottom: 0;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 #gridContainer{
     margin:0;

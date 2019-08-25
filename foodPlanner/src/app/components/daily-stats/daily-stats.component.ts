@@ -32,21 +32,23 @@ export class DailyStatsComponent implements OnInit {
 
   constructor() {
     this.width = 900 - this.margin.left - this.margin.right;
-    this.height = 500 - this.margin.top - this.margin.bottom;
-    this.radius = Math.min(this.width, this.height) / 2 - 100;
+    this.height = 640 - this.margin.top - this.margin.bottom;
+    this.radius = Math.min(this.width, this.height)/1.5 - 100;
   }
   private processMeals(){
+    let total = 0;
     this.meals.forEach(meal=>{
       this.mealStats.calories += meal.calories;
       this.mealStats.carbs += meal.carbs;
       this.mealStats.fat += meal.fat;
       this.mealStats.protien += meal.protien;
+      total += meal.carbs + meal.fat+ meal.protien
     });
     this.processedData = [];
     Object.keys(this.mealStats).forEach(key=>{
       if(key != "calories"){
         this.processedData.push({
-          "nutrient":key,
+          "nutrient":key+'\n'+Math.floor(this.mealStats[key]/total*100)+"%",
           "macro":this.mealStats[key]
         });
       }
@@ -59,15 +61,15 @@ export class DailyStatsComponent implements OnInit {
         .outerRadius(this.radius - 10)
         .innerRadius(0);
     this.labelArc = d3Shape.arc()
-        .outerRadius(this.radius+30)
-        .innerRadius(this.radius+30);
+        .outerRadius(this.radius+50)
+        .innerRadius(this.radius+50);
     this.pie = d3Shape.pie()
         .sort(null)
         .value((d: any) => d.macro);
     console.log(`#${this.id}`);
     this.svg = d3.select(`#${this.id}`)
         .append('g')
-        .attr('transform', 'translate(' + (this.radius + 60) + ',' + this.height/2 + ')');
+        .attr('transform', 'translate(' + (this.radius+100) + ',' + this.height/2 + ')');
   }
   private drawPie() {
     let g = this.svg.selectAll('.arc')
@@ -77,7 +79,7 @@ export class DailyStatsComponent implements OnInit {
     g.append('path').attr('d', this.arc)
         .style('fill', (d: any) => this.color(d.data.nutrient) );
     g.append('text').attr('transform', (d: any) => 'translate(' + this.labelArc.centroid(d) + ')')
-        .attr('dy', '.35em')
+        .attr('dy', '20px')
         .text((d: any) => d.data.nutrient);
   }
   ngOnInit() {

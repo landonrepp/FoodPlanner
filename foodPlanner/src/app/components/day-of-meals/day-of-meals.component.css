@@ -4,14 +4,16 @@
 }
 #stats{
     grid-area: stats;
-    width:100%;
+    width:98%;
     display: block;
 }
 
 #dailyContainer{
     display: grid;
-    width:100%;
-    grid-template-columns: auto auto;
+    width:98%;
+    grid-template-columns: 530px auto;
     grid-template-rows: 100%;
-    grid-template-areas: "meal stats"
+    grid-template-areas: "meal stats";
+    padding:10px;
+    border:1px solid grey;
 }

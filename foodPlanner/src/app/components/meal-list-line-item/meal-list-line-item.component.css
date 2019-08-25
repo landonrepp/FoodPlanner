@@ -17,7 +17,6 @@
 }
 #mealListGridContainer{
     cursor: pointer;
-    background: lightblue;
     margin-bottom: 20px;
     padding:10px;
     display: grid;
