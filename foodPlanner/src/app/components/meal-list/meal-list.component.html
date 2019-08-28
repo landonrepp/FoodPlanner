@@ -1,5 +1,5 @@
 <div class = "dayBox" *ngFor="let data of mealHeirarchy; let i = index">
-    <h1>{{daysOfWeek[i]}}</h1>
+    <div class="header bold">{{daysOfWeek[i]}}</div>
     <app-day-of-meals [meals]="data"></app-day-of-meals>
     
 </div>
