@@ -7,51 +7,51 @@ import json
 import mysql.connector
 
 mydb = mysql.connector.connect(
-  host="34.73.42.170",
+  host="localhost",
   user="landonrepp",
-  passwd="",
+  password="password",
   database="Nutrition"
 )
 
-# with open("data.json","r") as mf:
-#     data = json.loads(mf.read())
+with open("data.json","r") as mf:
+    data = json.loads(mf.read())
 
-# with open("example.html","w", encoding='utf-8') as mf:
-#     mf.write(bs(json.loads(data[0])["ingredients"],features="lxml").prettify())
-# recipes = []
-# for i in data:
-#     ingredients = []
-#     i = json.loads(i)
-#     dat = bs(i["ingredients"],features="lxml")
-#     if i is None:
-#         continue
-#     for j in dat.find_all("li",{"class":"recipe-ingredients__item"}):
-#         quant = j.find("div",{"class":"recipe-ingredients__ingredient-quantity"})
-#         if quant is None:
-#             quant = "0"
-#         else:
-#             quant = quant.text
-#         item = j.find_all("span","recipe-ingredients__ingredient-part")
-#         # print(item)
-#         if len(item)>1:
-#             measure = item[0].text
-#             ingredient = item[1].text
-#         elif len(item) == 1:
-#             measure = item[0].text
-#             ingredient = "!!!"
-#         ingredients.append({
-#             "measure":measure,
-#             "ingredient":ingredient,
-#             "quantity":quant
-#         })
-#     recipes.append(({
-#         "ingredients":ingredients,
-#         "title": i["title"],
-#         "link":i["link"]
-#     }))
+with open("example.html","w", encoding='utf-8') as mf:
+    mf.write(bs(json.loads(data[0])["ingredients"]).prettify())
+recipes = []
+for i in data:
+    ingredients = []
+    i = json.loads(i)
+    dat = bs(i["ingredients"])
+    if i is None:
+        continue
+    for j in dat.find_all("li",{"class":"recipe-ingredients__item"}):
+        quant = j.find("div",{"class":"recipe-ingredients__ingredient-quantity"})
+        if quant is None:
+            quant = "0"
+        else:
+            quant = quant.text
+        item = j.find_all("span","recipe-ingredients__ingredient-part")
+        # print(item)
+        if len(item)>1:
+            measure = item[0].text
+            ingredient = item[1].text
+        elif len(item) == 1:
+            measure = item[0].text
+            ingredient = "!!!"
+        ingredients.append({
+            "measure":measure,
+            "ingredient":ingredient,
+            "quantity":quant
+        })
+    recipes.append(({
+        "ingredients":ingredients,
+        "title": i["title"],
+        "link":i["link"]
+    }))
 
-# with open("parsedData.json","w") as mf:
-#     mf.write(json.dumps(recipes))
+with open("parsedData.json","w") as mf:
+    mf.write(json.dumps(recipes))
 
 with open("parsedData.json","r") as mf:
     recipes = json.loads(mf.read())
@@ -74,6 +74,7 @@ for i in recipes:
         except:
             quantity = 0
         print(quantity)
+        j["measure"] = j["measure"].replace("(","").replace(")","").strip()
         ingredientSql = "INSERT INTO tblIngredients (recipeID,quantity,measure,ingredient) VALUES (%s,%s, %s,%s)"
         mycursor.execute(ingredientSql,(lastID,quantity,j["measure"],j["ingredient"]))
     mydb.commit()

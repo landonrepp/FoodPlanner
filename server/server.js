@@ -17,6 +17,7 @@ const credentials = {
     user: 'landonrepp',
     password: 'password',
     database: 'Nutrition'
+
 }
 
 
@@ -95,6 +96,10 @@ function callSp(sp,checkIfExists = true,params=null){
                 strParams = strParams.substring(0,strParams.length-1)
             }
             pool.getConnection((err,con)=>{
+                if(err){
+                    handleErr();
+                    return;
+                }
                 console.log(`CALL ${sp}(${strParams})`);
                 con.query(`CALL ${sp}(${strParams})`,(err,result,fields)=>{
                     if(err) {
