@@ -1,0 +1,20 @@
+<div class = "ingredient">
+    <div>
+        {{ingredient.ingredient}}  ({{ingredient.ingredientID}})
+    </div>
+    <div class="unitConversionPrompt" [hidden]="!prompt">
+        <input type="text" [value]="formValues.ingredientQuantity" (input)="formValues.ingredientQuantity = +$event.target.value"> {{ingredient.measure}} of {{ingredient.ingredient}}
+        <br>
+        <input type="text" [value]="formValues.householdQuantity" (input)="formValues.householdQuantity = +$event.target.value"> {{selectedProduct.householdServingMeasurement}} of {{selectedProduct.strName}}
+        <br>
+        <input type="text" [value]="formValues.servingWeightQuantity" (input)="formValues.servingWeightQuantity = +$event.target.value" > {{selectedProduct.servingMeasurement}} of {{selectedProduct.strName}}
+        <br>
+        <input value="save" (click)="save()" type="button">
+    </div>
+</div>
+<div class = "searchbar">
+        <input type="text" (input)="searchValue = $event.target.value" [value]="searchValue" (change)="getProducts($event.target.value)">
+</div>
+<div class = "productList">
+    <app-link-items-line-item (click)="link(line)" class="lineItem" *ngFor="let line of products" [item]="line"></app-link-items-line-item>
+</div>

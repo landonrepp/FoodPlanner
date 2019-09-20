@@ -1,0 +1,10 @@
+.lineItem *{
+    background-color:lightblue;
+}
+.productList{
+    overflow-y:scroll;
+    height:52vh;
+}
+.ingredient{
+    height:40vh;
+}

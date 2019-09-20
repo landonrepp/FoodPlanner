@@ -1,0 +1,24 @@
+#productID{
+    grid-area: productID;
+}
+#strName{
+    grid-area: strName;
+}
+#ingredients_english{
+    overflow-y:auto;
+    grid-area:ingredients_english;
+}
+#householdServingMeasurement{
+    grid-area: householdServingMeasurement;
+}
+#servingMeasurement{
+    grid-area: servingMeasurement;
+}
+#gridWrapper{
+    display:grid;
+    grid-template-rows: 100px;
+    column-gap: 20px;
+    grid-template-columns: 100px 200px 100px 100px auto;
+    grid-template-areas: "productID strName servingMeasurement householdServingMeasurement ingredients_english";
+    margin-bottom: 40px;
+}

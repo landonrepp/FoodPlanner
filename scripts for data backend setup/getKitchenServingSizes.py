@@ -3,15 +3,21 @@ from sqlalchemy import create_engine
 import pandas as pd
 from bs4 import BeautifulSoup as bs
 import json
+import requests
+from functools import reduce
 
 import mysql.connector
 
+with open("connectionstring.json","r") as mf:
+    connectionstring = json.loads(mf.read())
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="landonrepp",
-  password="password",
-  database="Nutrition"
+  host=connectionstring["host"],
+  user=connectionstring["user"],
+  password=connectionstring["password"],
+  database=connectionstring["databse"]
 )
+def Average(lst): 
+    return reduce(lambda a, b: int(a) + int(b), lst) / len(lst)
 
 with open("data.json","r") as mf:
     data = json.loads(mf.read())
@@ -27,6 +33,7 @@ for i in data:
         continue
     for j in dat.find_all("li",{"class":"recipe-ingredients__item"}):
         quant = j.find("div",{"class":"recipe-ingredients__ingredient-quantity"})
+        
         if quant is None:
             quant = "0"
         else:
@@ -50,32 +57,25 @@ for i in data:
         "link":i["link"],
         "img":i["img"]
     }))
-
-with open("parsedData.json","w") as mf:
-    mf.write(json.dumps(recipes))
-
-with open("parsedData.json","r") as mf:
-    recipes = json.loads(mf.read())
+for i in range(len(recipes)):
+    href = recipes[i]["link"]
+    try:
+        soup = bs(requests.get(href).text, "html.parser")
+    except Exception as ex:
+        print(ex)
+        continue
+    servingQuant = soup.find("div",{"class":"recipe-facts__servings"})
+    if servingQuant is None:
+        servingQuant = soup.find("div",{"class":"recipe-facts__yield"}).find("a").find("span").text
+    else:
+        servingQuant = servingQuant.find("a").text
+    servingQuant = servingQuant.replace(" ","").split("-")
+    servingQuant = [int(eval(i)) for i in servingQuant]
+    print(servingQuant)
+    recipes[i]["servingQuant"] = Average(servingQuant)
 
 mycursor = mydb.cursor()
 for i in recipes:
-    recipeSql = "INSERT INTO tmptblRecipes (recipe,link,img) VALUES (%s,%s,%s)"
-    mycursor.execute(recipeSql,(i["title"],i["link"],i["img"]))
-    mydb.commit()
-    lastID = mycursor.lastrowid
-    for j in i["ingredients"]:
-        print("brefore:","\""+j["quantity"]+"\"")
-        if "-" in j["quantity"]:
-            j["quantity"]= j["quantity"].split("-")[1]
-        if " " in j["quantity"]:
-            if len(j["quantity"].split(" ")[1])==0:
-                j["quantity"] = j["quantity"].replace(" ","")
-        try:
-            quantity = eval(j["quantity"].replace("⁄","/").replace(" ","+"))
-        except:
-            quantity = 0
-        print(quantity)
-        j["measure"] = j["measure"].replace("(","").replace(")","").strip()
-        ingredientSql = "INSERT INTO tmptblIngredients (recipeID,quantity,measure,ingredient) VALUES (%s,%s, %s,%s)"
-        mycursor.execute(ingredientSql,(lastID,quantity,j["measure"],j["ingredient"]))
-    mydb.commit()
+    recipeSql = "INSERT INTO tmptblRecipes (recipe,link,img,servingQuant) VALUES (%s,%s,%s,%s)"
+    mycursor.execute(recipeSql,(i["title"],i["link"],i["img"],i["servingQuant"]))
+mydb.commit()

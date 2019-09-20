@@ -11,6 +11,7 @@ export class GetNutritionalInformationService {
   constructor() { }
 }
 var url = 'http://api.landonrepp.com/sql/spget';
+url = "http://localhost:8000/sql/spget";
 @Injectable({providedIn: 'root'})
 export class NutritionService {
   httpOptions = {
