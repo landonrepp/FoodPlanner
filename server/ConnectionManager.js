@@ -8,7 +8,8 @@ const credentials = {
     host: 'localhost',
     user: 'landonrepp',
     password: 'password',
-    database: 'Nutrition'
+    database: 'Nutrition',
+    timeout:30
 
 }
 
@@ -32,12 +33,13 @@ function callSp(sp,checkIfExists = true,params=null){
         else{
             strParams = "";
             for(i in params){
-                if (typeof(params[i])== "number"){
-                    strParams += `${params[i]},`
-                }
-                else{
-                    strParams += `'${params[i]}',`
-                }
+                strParams += `${params[i]},`
+                // if (typeof(params[i])== "number"){
+                //     strParams += `${params[i]},`
+                // }
+                // else{
+                //     strParams += `'${params[i]}',`
+                // }
             }
             if(strParams.length>0){
                 strParams = strParams.substring(0,strParams.length-1)
