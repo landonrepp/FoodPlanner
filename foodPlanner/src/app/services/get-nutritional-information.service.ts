@@ -10,8 +10,10 @@ export class GetNutritionalInformationService {
 
   constructor() { }
 }
-var url = 'http://api.landonrepp.com/sql/spget';
-url = "http://localhost:8000/sql/spget";
+let getUrl = 'http://api.landonrepp.com/sql/spget';
+let postUrl = 'http://api.landonrepp.com/sql/sppost';
+getUrl = "http://localhost:8000/sql/spget";
+postUrl = "http://localhost:8000/sql/sppost";
 @Injectable({providedIn: 'root'})
 export class NutritionService {
   httpOptions = {
@@ -25,8 +27,11 @@ export class NutritionService {
 
   // get line items
   public getWeeklyMeals(): Observable<NutritionalInformation[]>{
-    const items: Observable<NutritionalInformation[]> = this.http.get<NutritionalInformation[]>(`${url}/getWeekOfMeals`);
+    const items: Observable<NutritionalInformation[]> = this.http.get<NutritionalInformation[]>(`${getUrl}/getWeekOfMeals`);
     return items;
   }
- 
+  public getMealPlan(mealPlanParameters:MealPlanParameters): Observable<NutritionalInformation[]>{
+    const items: Observable<NutritionalInformation[]> = this.http.post<NutritionalInformation[]>(`${getUrl}/getMealPlan`,mealPlanParameters);
+    return items;
+  }
 }

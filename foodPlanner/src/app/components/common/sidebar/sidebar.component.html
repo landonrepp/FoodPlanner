@@ -1,6 +1,13 @@
 <div class = "sidebar primary-color">
     <div class = 'line-items menu-choices'>
-        <div id='generateMeals' style="cursor: pointer;" onclick="window.location='/generate-meals'">Generate Meals</div>
+        <a href='/generate-meals'>
+            <div id='generateMeals' style="cursor: pointer;" >Generate Meals</div>
+        </a>
+        <a href='/generate-meal-plan'>
+            <div id='generateMealPlan' style="cursor: pointer" >
+                Generate Meal Plan List
+            </div>
+        </a>
         <div id='getGroceryList'>Get Grocery List</div>
         <div id='editPreferences'>Edit Preferences</div>
             <div id='login' onclick="window.location='/login'" [ngClass]="{'invisible': false}" class = 'account'>

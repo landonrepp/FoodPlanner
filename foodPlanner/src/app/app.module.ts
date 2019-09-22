@@ -11,11 +11,16 @@ import { MealListLineItemComponent } from './components/meal-list-line-item/meal
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { DailyStatsComponent } from './components/daily-stats/daily-stats.component';
-import { DayOfMealsComponent } from './components/day-of-meals/day-of-meals.component'; 
+import { DayOfMealsComponent } from './components/day-of-meals/day-of-meals.component';
+import { MealPlanListComponent } from './MealPlan/meal-plan-list/meal-plan-list.component';
+import { PromptUserComponent } from './MealPlan/prompt-user/prompt-user.component'; 
+import { FormsModule }   from '@angular/forms';
+import { ModalComponent } from './components/modal-component/modal-component.component';
 
 const appRoutes: Routes =[
   { path: 'generate-meals', component: MealListComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path:'generate-meal-plan', component:MealPlanListComponent }
 ]
 
 @NgModule({
@@ -27,13 +32,16 @@ const appRoutes: Routes =[
     MealListLineItemComponent,
     LoginComponent,
     DailyStatsComponent,
-    DayOfMealsComponent
+    DayOfMealsComponent,
+    MealPlanListComponent,
+    PromptUserComponent,
+    ModalComponent
   ],
   imports: [
     RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      appRoutes
     ),
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule
