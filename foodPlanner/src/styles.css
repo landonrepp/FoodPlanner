@@ -4,7 +4,8 @@
     --primary-color:#F3F3F3;
     --background-color: #ffffff;
     --text-color: #2d2d2d; 
-    --secondary-color:#2A91E1;
+    --secondary-color:#ebebd3;
+    --primary-border-color:#2d2d2d;
   }
 .primary-color{
     background-color: var(--primary-color);
@@ -46,6 +47,14 @@ body{
 a{
     text-decoration: none;
     color: inherit;
+
+}
+.clickable-area{
+    pointer:cursor;
+    background-color: var(--primary-color);
+}
+.clickable-area:hover{
+    background-color: var(--secondary-color);
 
 }
 .form-group label{
@@ -121,4 +130,11 @@ a{
   app-modal {
     /* modals are hidden by default */
     display: none;
+  }
+  .header{
+      font-size: 3em;
+      font-weight: 600;
+      text-align: center;
+      
+      
   }

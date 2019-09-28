@@ -25,7 +25,7 @@ export class DailyStatsComponent implements OnInit {
   private mealStats: MealStats = {
     calories: 0,
     carbs:0,
-    protien:0,
+    protein:0,
     fat:0
   };
   private processedData: any[];
@@ -41,8 +41,8 @@ export class DailyStatsComponent implements OnInit {
       this.mealStats.calories += meal.calories;
       this.mealStats.carbs += meal.carbs;
       this.mealStats.fat += meal.fat;
-      this.mealStats.protien += meal.protien;
-      total += meal.carbs + meal.fat+ meal.protien
+      this.mealStats.protein += meal.protein;
+      total += meal.carbs + meal.fat+ meal.protein
     });
     this.processedData = [];
     Object.keys(this.mealStats).forEach(key=>{

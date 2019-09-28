@@ -4,7 +4,7 @@ interface NutritionalInformation {
     recipe: string,
     link: string,
     calories: number,
-    protien: number,
+    protein: number,
     carbs: number,
     fat: number,
 }

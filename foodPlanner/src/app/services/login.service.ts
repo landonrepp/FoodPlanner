@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
-let geturl = 'http://api.landonrepp.com/sql/spget';
-let posturl = 'http://api.landonrepp.com/sql/sppost';
+let geturl = environment.apiUrl+'sql/spget';
+let posturl = environment.apiUrl+'sql/sppost';
 @Injectable({
   providedIn: 'root'
 })

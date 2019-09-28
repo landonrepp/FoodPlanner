@@ -1,7 +1,7 @@
 import { Injectable, NgModule } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
-
+import { environment } from '../../environments/environment';
 
 // @Injectable({
 //   providedIn: 'root'
@@ -10,10 +10,10 @@ export class GetNutritionalInformationService {
 
   constructor() { }
 }
-let getUrl = 'http://api.landonrepp.com/sql/spget';
-let postUrl = 'http://api.landonrepp.com/sql/sppost';
-getUrl = "http://localhost:8000/sql/spget";
-postUrl = "http://localhost:8000/sql/sppost";
+let getUrl = environment.apiUrl+'spget';
+let postUrl = environment.apiUrl+'sql/sppost';
+getUrl = environment.apiUrl+"sql/spget";
+postUrl = environment.apiUrl+"sql/sppost";
 @Injectable({providedIn: 'root'})
 export class NutritionService {
   httpOptions = {
@@ -30,8 +30,8 @@ export class NutritionService {
     const items: Observable<NutritionalInformation[]> = this.http.get<NutritionalInformation[]>(`${getUrl}/getWeekOfMeals`);
     return items;
   }
-  public getMealPlan(mealPlanParameters:MealPlanParameters): Observable<NutritionalInformation[]>{
-    const items: Observable<NutritionalInformation[]> = this.http.post<NutritionalInformation[]>(`${getUrl}/getMealPlan`,mealPlanParameters);
+  public getMealPlan(mealPlanParameters:MealPlanParameters): Observable<MealPlan[]>{
+    const items: Observable<MealPlan[]> = this.http.post<MealPlan[]>(`${postUrl}/getMealPlan`,mealPlanParameters);
     return items;
   }
 }

@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl:"http://localhost:8000/",
+  daysOfTheWeek: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  abbrDaysOfTheWeek:["Sun.","Mon.", "Tue.", "Wed.", "Thur.", "Fri.", "Sat."]
 };
 
 /*

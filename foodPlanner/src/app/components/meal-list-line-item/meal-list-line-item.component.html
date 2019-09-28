@@ -1,7 +1,7 @@
 <!-- <p>meal-list-line-item works!</p> -->
 
 <a href="{{mealProperty.link}}">
-    <div id="mealListGridContainer" class="secondary-color">
+    <div id="mealListGridContainer" class="clickable-area">
         <div id = 'recipe'>
             <div class = "bold subheader">{{mealProperty["recipe"]}}</div>
         </div>
@@ -11,11 +11,12 @@
         <div id = 'carbs'>
             Carbs:{{mealProperty["carbs"]}}
         </div>
-        <div id = 'protien'>
-            Protien:{{mealProperty["protien"]}}
+        <div id = 'protein'>
+            protein:{{mealProperty["protein"]}}
         </div>
         <div id = 'fat'>
             Fat:{{mealProperty["fat"]}}
         </div>
+        <img id="image" [src]="mealProperty['image']" />
     </div>
 </a>

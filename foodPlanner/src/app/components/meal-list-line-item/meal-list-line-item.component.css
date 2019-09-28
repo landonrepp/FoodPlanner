@@ -9,11 +9,17 @@
 #carbs{
     grid-area:carbs;
 }
-#protien{
-    grid-area:protien;
+#protein{
+    grid-area:protein;
 }
 #fat{
     grid-area:fat;
+}
+#image{
+    grid-area:image;
+    display:block;
+    height:100%;
+    width:auto;
 }
 #mealListGridContainer{
     cursor: pointer;
@@ -21,14 +27,28 @@
     padding:10px;
     display: grid;
     height:200px;
-    width:500px;
-    grid-template-columns: 50% 10% 40%;
-    grid-template-rows: auto;
-    grid-template-areas: 
+    width:100%;
+    max-width:1440px;
+    border-bottom: 1px solid var(--primary-border-color);
+    margin:auto;
+    grid-gap: auto;
+    grid-template-columns: 39% repeat(4,auto);
+    grid-template-rows: max-content auto;
+    grid-template-areas: "recipe calories carbs protein fat" "image . . . .";
+    
+}
+@media (max-width:1000px){
+    
+    #mealListGridContainer{
+        grid-template-columns: 49% 9% 39%;
+        grid-template-rows: max-content auto;
+        grid-template-areas: 
         "recipe . calories"
         "recipe . carbs"
-        ". . protien"
-        ". . fat";
+        "image image protein"
+        "image image fat";
+    }
+
 }
 .subheader{
     font-size:1.5em;

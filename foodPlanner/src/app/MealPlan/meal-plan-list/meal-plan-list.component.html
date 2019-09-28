@@ -1,5 +1,19 @@
 <app-modal id='prompt'>
-    <app-prompt-user></app-prompt-user>
+    <app-prompt-user (sendDataToParent)="eventFromChild($event)"></app-prompt-user>
 </app-modal>
-
-<button (click)='modalService.open("prompt");' >test</button>
+<div class='header'>
+    Weekly Meal Plan
+</div>
+<div class="mealGridContainer">
+    <div class="day" *ngFor="let day of displayedMeals">
+        <div class="meal" [style.background-color]="meal.mealColor" *ngFor="let meal of day">
+            {{meal.mealNumber}}
+        </div>
+    </div>
+</div>
+<ol>
+    <li *ngFor="let meal of flattenedMeals">
+        <app-meal-list-line-item class='flattenedMeals' [mealProperty]='meal'>
+        </app-meal-list-line-item>
+    </li>
+</ol>

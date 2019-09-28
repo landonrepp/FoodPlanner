@@ -42,7 +42,7 @@ app.get('/:path',(req,res)=>{
 app.route('/sql/sppost/:sp').post((req,res)=>{
     let sp=req.params['sp'];
 
-    ConnectionManager.callSp(sp,true,params=req.query).then(result=>{
+    ConnectionManager.callSp(sp,true,params=req.body).then(result=>{
         res.end(JSON.stringify(result[0]));
     })
     .catch((err)=>{
@@ -51,7 +51,7 @@ app.route('/sql/sppost/:sp').post((req,res)=>{
 });
 app.get('/sql/spget/:sp',(req,res)=>{
     let sp=req.params['sp'];
-    ConnectionManager.callSp(sp,true,req.query).then(result=>{
+    ConnectionManager.callSp(sp,true,req.body).then(result=>{
         res.end(JSON.stringify(result[0]));
     })
     .catch((err)=>{

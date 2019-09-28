@@ -1,0 +1,17 @@
+.meal{
+    width:30%;
+    display:inline-block;
+    margin:1%;
+    background-color:green;
+    text-align: center;
+    line-height: 2em;
+    height:2em;
+}
+.day{
+    /* todo: make responsive */
+    width:150px;
+    margin:auto;
+}
+.mealGridContainer{
+    margin-bottom:15px;
+}
