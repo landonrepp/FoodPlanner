@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TypeFactoryService } from './type-factory.service';
+import { LoginService } from '../login.service';
 
-describe('TypeFactoryService', () => {
+describe('LoginService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: TypeFactoryService = TestBed.get(TypeFactoryService);
+    const service: LoginService = TestBed.get(LoginService);
     expect(service).toBeTruthy();
   });
 });

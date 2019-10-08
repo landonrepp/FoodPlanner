@@ -15,7 +15,8 @@
     "mongodb": "^3.1.13",
     "mysql": "^2.16.0",
     "nodemailer": "^6.3.0",
-    "pandas-js": "^0.2.4"
+    "pandas-js": "^0.2.4",
+    "passport-google-token": "^0.1.2"
   },
   "devDependencies": {},
   "description": ""

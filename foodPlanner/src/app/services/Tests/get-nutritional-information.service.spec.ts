@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GetNutritionalInformationService } from './get-nutritional-information.service';
+import { GetNutritionalInformationService } from '../get-nutritional-information.service';
 
 describe('GetNutritionalInformationService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

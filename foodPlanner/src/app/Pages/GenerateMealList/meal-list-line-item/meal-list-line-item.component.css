@@ -41,7 +41,7 @@
     
     #mealListGridContainer{
         grid-template-columns: 49% 9% 39%;
-        grid-template-rows: max-content auto;
+        grid-template-rows: repeat(4,25%);
         grid-template-areas: 
         "recipe . calories"
         "recipe . carbs"
