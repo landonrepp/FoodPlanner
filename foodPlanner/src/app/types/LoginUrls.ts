@@ -1,0 +1,3 @@
+interface LoginUrls{
+    google:string;
+}

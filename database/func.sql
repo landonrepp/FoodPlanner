@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.17, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.18, for Linux (x86_64)
 --
 -- Host: localhost    Database: Nutrition
 -- ------------------------------------------------------
--- Server version	8.0.17
+-- Server version	8.0.18
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -37,4 +37,4 @@ CREATE TABLE `func` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-20 17:54:43
+-- Dump completed on 2019-10-20 19:37:13
