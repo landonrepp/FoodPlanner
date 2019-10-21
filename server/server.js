@@ -8,68 +8,42 @@ const baseUrl = "/index.html";
 const app = express();
 const port = 8000;
 const bodyParser = require('body-parser');
-const passport = require('passport-google-token');
 //internal dependancies
 const ConnectionManager = require("./ConnectionManager");
-
+// const LoginService = require("./LoginService");
 const MealMapper = require("./MealMapper");
-
+// https://www.sitepoint.com/user-authentication-mean-stack/
 
 app.use(cors());
 app.use(bodyParser.json()); // this will parse Content-Type: application/json 
 app.use(bodyParser.urlencoded({ extended: true })); // this will parse Content-Type:  application/x-www-form-urlencoded
-// google auth
-passport.use(new GoogleTokenStrategy({
-    clientID: "1082570532123-me6irfvs9fn0h55vgu9ntg8dia9u8ems.apps.googleusercontent.com",
-    clientSecret: "TNiIEutkRGL1zIUdcdyn-NDE"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
-  }
-));
-
-
+// app.use(ConnectionManager.router);
 
 ConnectionManager.refreshDBLink();
 
+app.get("/google/authenticate",(req,res)=>{
+    passport.authenticate('google-id-token'),{failureRedirect:'/login'},
+    function(req,res){
+        res.end(req.user);
+        return;
+    }
+});
+
 app.get('/',(req,res)=>{
     // navigation redirect
-    res.end(`<html><body><script>window.location.replace('${baseUrl}')</script><body></html>`)
+    res.end(`<html><body><script>window.location.replace('${baseUrl}')</script><body></html>`);
 });
 
-app.get("/refreshDBLink",(req,res)=>{
-    ConnectionManager.refreshDBLink();
-    res.end();
-});
 
+// TODO: THIS PIECE https://stackoverflow.com/questions/39845526/how-to-serve-an-angular2-app-in-a-node-js-server
 app.get('/:path',(req,res)=>{
     console.log(req.url);
     fs.readFile('./client/'+req.params['path'], 'utf8', function(err, contents) {
         res.end(contents);
     });
 });
-app.route('/sql/sppost/:sp').post((req,res)=>{
-    let sp=req.params['sp'];
 
-    ConnectionManager.callSp(sp,true,params=req.body).then(result=>{
-        res.end(JSON.stringify(result[0]));
-    })
-    .catch((err)=>{
-        res.end(err);
-    });
-});
-app.get('/sql/spget/:sp',(req,res)=>{
-    let sp=req.params['sp'];
-    ConnectionManager.callSp(sp,true,req.body).then(result=>{
-        res.end(JSON.stringify(result[0]));
-    })
-    .catch((err)=>{
-        res.end(err);
-    });
-});
-
+// app.post('/login', passport.authenticate('local', { successRedirect: '/',failureRedirect: '/login' }));
 
 app.listen(port,()=>{
     console.log('listening to port '+port);

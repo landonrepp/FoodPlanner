@@ -1,6 +1,8 @@
 const fs = require('fs');
 let mysql = require('mysql');
 const ExceptionHandler = require("./ExceptionHandler");
+const router = require('express').Router();
+
 
 module.exports = {callSp, refreshDBLink }
 
@@ -22,6 +24,31 @@ function handleErr(err){
 }
 
 let pool = mysql.createPool(credentials);
+
+router.get("/refreshDBLink",(req,res)=>{
+    ConnectionManager.refreshDBLink();
+    res.end();
+});
+
+router.route('/sql/sppost/:sp').post((req,res)=>{
+    let sp=req.params['sp'];
+
+    ConnectionManager.callSp(sp,true,params=req.body).then(result=>{
+        res.end(JSON.stringify(result[0]));
+    })
+    .catch((err)=>{
+        res.end(err);
+    });
+});
+router.get('/sql/spget/:sp',(req,res)=>{
+    let sp=req.params['sp'];
+    ConnectionManager.callSp(sp,true,req.body).then(result=>{
+        res.end(JSON.stringify(result[0]));
+    })
+    .catch((err)=>{
+        res.end(err);
+    });
+});
 
 function callSp(sp,checkIfExists = true,params=null){
     return new Promise((resolve,reject)=>{
