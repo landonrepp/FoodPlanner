@@ -6,19 +6,23 @@ var cors = require('cors')
 const https = require("https");
 const baseUrl = "/index.html";
 const app = express();
-const port = 8000;
+const port = 3000;
 const bodyParser = require('body-parser');
 //internal dependancies
 const ConnectionManager = require("./ConnectionManager");
-// const LoginService = require("./LoginService");
+const LoginService = require("./LoginService");
 const MealMapper = require("./MealMapper");
 // https://www.sitepoint.com/user-authentication-mean-stack/
+
+app.use(LoginService.passport.initialize());
+app.use(LoginService.passport.session());
 
 app.use(cors());
 app.use(bodyParser.json()); // this will parse Content-Type: application/json 
 app.use(bodyParser.urlencoded({ extended: true })); // this will parse Content-Type:  application/x-www-form-urlencoded
 // app.use(ConnectionManager.router);
-
+app.use("/login", LoginService.router);
+app.use("/sql", ConnectionManager.router);
 ConnectionManager.refreshDBLink();
 
 app.get("/google/authenticate",(req,res)=>{

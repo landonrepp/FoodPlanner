@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl:"http://localhost:8000/",
+  apiUrl:"http://dev.landonrepp.com/",
   daysOfTheWeek: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
   abbrDaysOfTheWeek:["Sun.","Mon.", "Tue.", "Wed.", "Thur.", "Fri.", "Sat."],
   google_client_id:"1082570532123-me6irfvs9fn0h55vgu9ntg8dia9u8ems.apps.googleusercontent.com",

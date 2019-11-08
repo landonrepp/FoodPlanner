@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from "../../../environments/environment"
 import { 
   AuthService,
   FacebookLoginProvider,
@@ -13,6 +14,7 @@ import {
 export class LoginComponent implements OnInit {
   user: any;
   loggedIn: boolean;
+  loginUrl:string = environment.apiUrl;
   constructor(private authService: AuthService) { }
 
 

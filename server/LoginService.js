@@ -1,7 +1,26 @@
 const passport = require('passport');
+const Constants = require('./Constants');
 const jwt = require('jsonwebtoken');
-const GoogleTokenStrategy = require('passport-google-id-token');
+const GoogleTokenStrategy = require('passport-google-oauth20').Strategy;
 const router = require('express').Router();
+const ExpressSesssion = require("express-session");
+const defaultScope = [
+    'https://www.googleapis.com/auth/plus.me',
+    'https://www.googleapis.com/auth/userinfo.email'
+];
+const uuid = require("uuid/v4");
+
+const SessionObj = {
+    genid: (req) => {
+        console.log('Inside the session middleware')
+        console.log(req.sessionID)
+        return uuid() // use UUIDs for session IDs
+    },
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}
+
 function ensureLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -9,27 +28,41 @@ function ensureLoggedIn(req, res, next) {
 
     res.redirect('/login')
 }
+
 // google auth
 passport.use(new GoogleTokenStrategy({
     clientID: "1082570532123-me6irfvs9fn0h55vgu9ntg8dia9u8ems.apps.googleusercontent.com",
-    clientSecret: "TNiIEutkRGL1zIUdcdyn-NDE"
+    clientSecret: "TNiIEutkRGL1zIUdcdyn-NDE",
+    returnURL: '/login/return',
+    callbackURL: '/login/return',
+    scope:defaultScope
   },
-  function(parsedToken, googleId, done) {
-    User.findOrCreate({ googleId: googleId }, function (err, user) {
-      return done(err, user);
-    });
+  function(accessToken, refreshToken, profile, cb) {
+    return cb(null, profile);
   }
 ));
-// TODO:THIS PIECE youtube.com/watch?v=c_FRNFZENjw
-// router.get('/login',);
 
-/**
- * This scope tells google what information we want to request.
- */
-const defaultScope = [
-    'https://www.googleapis.com/auth/plus.me',
-    'https://www.googleapis.com/auth/userinfo.email'
-];
+// add & configure middleware
+router.use(ExpressSesssion(SessionObj))
+
+passport.serializeUser(function(user, cb) {
+    cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+    cb(null, obj);
+});
+
+router.get('/google/',passport.authenticate('google'));
+
+
+
+router.get('/return', 
+    passport.authenticate('google', { failureRedirect: '/login/google' }),
+    function(req, res) {
+        res.redirect(301,Constants.CrossOriginURL);
+    }
+);
 
 /**
  * Get a url which will open the google sign-in page and request access to the scope provided (such as calendar events).
@@ -50,4 +83,6 @@ function urlGoogle() {
     const url = getConnectionUrl(auth);
     return url;
 }
+
+module.exports = {router,passport};
 
