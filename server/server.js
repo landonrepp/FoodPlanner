@@ -3,15 +3,20 @@ const express = require("express");
 const fs = require('fs');
 // const http = require("http");
 var cors = require('cors')
+const Constants = require('./Constants');
 const https = require("https");
 const baseUrl = "/index.html";
 const app = express();
-const port = 3000;
+const ExpressSesssion = require("express-session");
+const port = 8000;
 const bodyParser = require('body-parser');
 //internal dependancies
 const ConnectionManager = require("./ConnectionManager");
 const LoginService = require("./LoginService");
 const MealMapper = require("./MealMapper");
+
+app.use(ExpressSesssion(LoginService.SessionObj));// IMPORTANT:: this line must run before any other app.use
+
 // https://www.sitepoint.com/user-authentication-mean-stack/
 
 app.use(LoginService.passport.initialize());
@@ -35,7 +40,7 @@ app.get("/google/authenticate",(req,res)=>{
 
 app.get('/',(req,res)=>{
     // navigation redirect
-    res.end(`<html><body><script>window.location.replace('${baseUrl}')</script><body></html>`);
+    res.end(`<html><body><script>window.location.replace('${Constants.CrossOriginURL}')</script><body></html>`);
 });
 
 
@@ -52,3 +57,10 @@ app.get('/:path',(req,res)=>{
 app.listen(port,()=>{
     console.log('listening to port '+port);
 });
+
+ MealMapper.createMealPlans().then(result=>{
+    console.log("result"); 
+    console.log(result);
+ }).catch(ex=>{
+     console.log(ex);
+ });

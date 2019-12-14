@@ -6,6 +6,8 @@
     --text-color: #2d2d2d; 
     --secondary-color:#ebebd3;
     --primary-border-color:#2d2d2d;
+    --button-background:green;
+    --button-color:white;
   }
 .primary-color{
     background-color: var(--primary-color);

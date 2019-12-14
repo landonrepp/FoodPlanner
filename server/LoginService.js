@@ -4,12 +4,13 @@ const jwt = require('jsonwebtoken');
 const GoogleTokenStrategy = require('passport-google-oauth20').Strategy;
 const router = require('express').Router();
 const ExpressSesssion = require("express-session");
+var MySQLStore = require('express-mysql-session')(ExpressSesssion);
 const defaultScope = [
     'https://www.googleapis.com/auth/plus.me',
     'https://www.googleapis.com/auth/userinfo.email'
 ];
 const uuid = require("uuid/v4");
-
+var sessionStore = new MySQLStore(Constants.DatabaseLogin);
 const SessionObj = {
     genid: (req) => {
         console.log('Inside the session middleware')
@@ -18,7 +19,8 @@ const SessionObj = {
     },
   secret: 'keyboard cat',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store:sessionStore
 }
 
 function ensureLoggedIn(req, res, next) {
@@ -26,14 +28,13 @@ function ensureLoggedIn(req, res, next) {
         return next();
     }
 
-    res.redirect('/login')
+    res.redirect('/login/google')
 }
 
 // google auth
 passport.use(new GoogleTokenStrategy({
     clientID: "1082570532123-me6irfvs9fn0h55vgu9ntg8dia9u8ems.apps.googleusercontent.com",
     clientSecret: "TNiIEutkRGL1zIUdcdyn-NDE",
-    returnURL: '/login/return',
     callbackURL: '/login/return',
     scope:defaultScope
   },
@@ -84,5 +85,5 @@ function urlGoogle() {
     return url;
 }
 
-module.exports = {router,passport};
+module.exports = {router,passport, SessionObj};
 

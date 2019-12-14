@@ -9,7 +9,7 @@ const credentials = {
     user: 'landonrepp',
     password: 'password',
     database: 'Nutrition',
-    timeout:30
+    timeout:10
 
 }
 
@@ -104,4 +104,26 @@ function refreshDBLink(){
     });
 }
 
-module.exports = {callSp, refreshDBLink, router }
+function callSql(strQuery){
+    return new Promise((resolve,reject)=>{
+        pool.getConnection((err,con)=>{
+            if(err){
+                handleErr();
+                return;
+            }
+            con.query(strQuery,(err,result,fields)=>{
+                if(err) {
+                    console.log("err "+ err)
+                    handleErr();
+                    reject(JSON.stringify(err));
+                }
+                else{
+                    resolve(result[0]);
+                }
+            });
+            con.release();
+        });
+    });
+}
+
+module.exports = {callSp, refreshDBLink, router, callSql }
