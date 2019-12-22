@@ -9,19 +9,19 @@
 <div class="container">
     <div class="form-group">
         <label class='calories'>Desired Calories</label>
-        <input class='calories' type="number" (input) = "mealPlanParameters.cals=$event.target.value==''?null:$event.target.value">
+        <input class='calories' type="number" (input) = "mealPlanParameters.calories=$event.target.value==''?null:$event.target.value">
     </div>
     <div class="form-group">
         <label class='carbs'>Desired Carbs</label>
-        <input class='carbs' type="number" (input) = "mealPlanParameters.carbs=$event.target.value==''?null:$event.target.value">
+        <input class='carbs' type="number" (input) = "mealPlanParameters.carbohydrates=$event.target.value==''?null:$event.target.value">
     </div>
     <div class="form-group">
         <label class='proteins'>Desired protein</label>
-        <input class='proteins' type="number" (input) = "mealPlanParameters.proteins=$event.target.value==''?null:$event.target.value">
+        <input class='proteins' type="number" (input) = "mealPlanParameters.protein=$event.target.value==''?null:$event.target.value">
     </div>
     <div class="form-group">
         <label class='fats'>Desired Fat</label>
-        <input class='fats' type="number" (input) = "mealPlanParameters.fats=$event.target.value==''?null:$event.target.value">
+        <input class='fats' type="number" (input) = "mealPlanParameters.fat=$event.target.value==''?null:$event.target.value">
     </div>
     <div class="green button" (click)="_sendDataToParent()">Generate Meals</div>
 </div>

@@ -8,10 +8,11 @@ export class TypeFactoryService {
   constructor() { }
   newMealPlanParameters():MealPlanParameters{
     return {
-        cals: null,
-        carbs: null,
-        fats:null,
-        proteins: null
+        calories: null,
+        carbohydrates: null,
+        fat:null,
+        protein: null,
+        meals: null
     }
 
 }

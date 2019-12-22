@@ -10,7 +10,6 @@ const credentials = {
     password: 'password',
     database: 'Nutrition',
     timeout:10
-
 }
 
 // initialize storedProcedureList
@@ -118,7 +117,7 @@ function callSql(strQuery){
                     reject(JSON.stringify(err));
                 }
                 else{
-                    resolve(result[0]);
+                    resolve(result);
                 }
             });
             con.release();

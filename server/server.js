@@ -8,7 +8,7 @@ const https = require("https");
 const baseUrl = "/index.html";
 const app = express();
 const ExpressSesssion = require("express-session");
-const port = 8000;
+const port = 8080;
 const bodyParser = require('body-parser');
 //internal dependancies
 const ConnectionManager = require("./ConnectionManager");
@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // this will parse Content-T
 // app.use(ConnectionManager.router);
 app.use("/login", LoginService.router);
 app.use("/sql", ConnectionManager.router);
+app.use("/meals",MealMapper.router);
 ConnectionManager.refreshDBLink();
 
 app.get("/google/authenticate",(req,res)=>{
@@ -57,10 +58,3 @@ app.get('/:path',(req,res)=>{
 app.listen(port,()=>{
     console.log('listening to port '+port);
 });
-
- MealMapper.createMealPlans().then(result=>{
-    console.log("result"); 
-    console.log(result);
- }).catch(ex=>{
-     console.log(ex);
- });

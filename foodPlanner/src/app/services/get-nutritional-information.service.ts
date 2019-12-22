@@ -12,7 +12,7 @@ export class GetNutritionalInformationService {
 }
 let getUrl = environment.apiUrl+'spget';
 let postUrl = environment.apiUrl+'sql/sppost';
-getUrl = environment.apiUrl+"sql/spget";
+getUrl = environment.apiUrl+"meals";
 postUrl = environment.apiUrl+"sql/sppost";
 @Injectable({providedIn: 'root'})
 export class NutritionService {
@@ -30,8 +30,9 @@ export class NutritionService {
     const items: Observable<NutritionalInformation[]> = this.http.get<NutritionalInformation[]>(`${getUrl}/getWeekOfMeals`);
     return items;
   }
-  public getMealPlan(mealPlanParameters:MealPlanParameters): Observable<MealPlan[]>{
-    const items: Observable<MealPlan[]> = this.http.post<MealPlan[]>(`${postUrl}/getMealPlan`,mealPlanParameters);
+  public getMealPlan(mealPlanParameters:MealPlanParameters): Observable<NutritionalInformation[][]>{
+    mealPlanParameters.meals = 3;
+    const items: Observable<NutritionalInformation[][]> = this.http.post<NutritionalInformation[][]>(`${getUrl}/getMealPlan`,mealPlanParameters);
     return items;
   }
 }
