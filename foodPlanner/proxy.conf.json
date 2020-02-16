@@ -1,0 +1,20 @@
+{
+    "/login/google": {
+        "target": "http://dev.landonrepp.com",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/meals/getMealPlan": {
+        "target": "http://dev.landonrepp.com",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/boop": {
+        "target": "http://dev.landonrepp.com",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    }
+}
