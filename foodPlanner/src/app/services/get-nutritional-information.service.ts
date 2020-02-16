@@ -19,20 +19,21 @@ export class NutritionService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
-      'Access-Control-Allow-Origin': '*'
-      // 'Authorization': 'my-auth-token'
-    })
+      'Access-Control-Allow-Origin': '*',
+      // 'Authorization': 'my-auth-token',
+    }),
+    withCredentials: true
   };
   constructor(private http: HttpClient) { }
 
   // get line items
   public getWeeklyMeals(): Observable<NutritionalInformation[]>{
-    const items: Observable<NutritionalInformation[]> = this.http.get<NutritionalInformation[]>(`${getUrl}/getWeekOfMeals`);
+    const items: Observable<NutritionalInformation[]> = this.http.get<NutritionalInformation[]>(`/meals/getWeekOfMeals`,this.httpOptions);
     return items;
   }
   public getMealPlan(mealPlanParameters:MealPlanParameters): Observable<NutritionalInformation[][]>{
     mealPlanParameters.meals = 3;
-    const items: Observable<NutritionalInformation[][]> = this.http.post<NutritionalInformation[][]>(`${getUrl}/getMealPlan`,mealPlanParameters);
+    const items: Observable<NutritionalInformation[][]> = this.http.post<NutritionalInformation[][]>(`/meals/getMealPlan`,mealPlanParameters,{ withCredentials: true});
     return items;
   }
 }

@@ -44,13 +44,15 @@ passport.use(new GoogleTokenStrategy({
 ));
 
 // add & configure middleware
-router.use(ExpressSesssion(SessionObj))
+router.use(ExpressSesssion(SessionObj));
 
 passport.serializeUser(function(user, cb) {
+    console.log("serializing");
     cb(null, user);
 });
 
 passport.deserializeUser(function(obj, cb) {
+    console.log("deserializing");
     cb(null, obj);
 });
 

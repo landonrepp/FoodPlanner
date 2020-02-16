@@ -21,7 +21,7 @@ export class LoginService {
 
   // get line items
   public tryLogin(username:string,password:string): Observable<LoginInformation>{
-    const items: Observable<LoginInformation> = this.http.get<LoginInformation>(`${geturl}/login`);
+    const items: Observable<LoginInformation> = this.http.get<LoginInformation>(`/login/google`);
     return items;
   }
   public getLoginUrl(): Observable<LoginUrls>{
