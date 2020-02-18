@@ -8,12 +8,14 @@ const https = require("https");
 const baseUrl = "/index.html";
 const app = express();
 const ExpressSesssion = require("express-session");
-const port = 8080;
+const port = 8000;
 const bodyParser = require('body-parser');
 //internal dependancies
 const ConnectionManager = require("./ConnectionManager");
 const LoginService = require("./LoginService");
 const MealMapper = require("./MealMapper");
+const path = require("path");
+const AppFolder = path.resolve('../foodPlanner/dist/foodPlanner');
 
 app.use(ExpressSesssion(LoginService.SessionObj));// IMPORTANT:: this line must run before any other app.use
 
@@ -29,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // this will parse Content-T
 app.use("/login", LoginService.router);
 app.use("/sql", ConnectionManager.router);
 app.use("/meals",MealMapper.router);
+
 ConnectionManager.refreshDBLink();
 
 app.get("/google/authenticate",(req,res)=>{
@@ -39,22 +42,24 @@ app.get("/google/authenticate",(req,res)=>{
     }
 });
 
-app.get('/',(req,res)=>{
-    // navigation redirect
-    res.end(`<html><body><script>window.location.replace('${Constants.CrossOriginURL}')</script><body></html>`);
-});
-
-
 // TODO: THIS PIECE https://stackoverflow.com/questions/39845526/how-to-serve-an-angular2-app-in-a-node-js-server
-app.get('/:path',(req,res)=>{
-    console.log(req.url);
-    fs.readFile('./client/'+req.params['path'], 'utf8', function(err, contents) {
-        res.end(contents);
-    });
-});
+// app.get('/:path',(req,res)=>{
+//     console.log(req.url);
+//     fs.readFile('./client/'+req.params['path'], 'utf8', function(err, contents) {
+//         res.end(contents);
+//     });
+// });
 
 // app.post('/login', passport.authenticate('local', { successRedirect: '/',failureRedirect: '/login' }));
 
+// this line is much more secure than the commented out bits
+app.get('*.*', express.static(AppFolder, {maxAge: '1y'}));
+
+// ---- SERVE APLICATION PATHS ---- //
+app.all('*', function (req, res) {
+    res.status(200).sendFile(`/`, {root: AppFolder});
+});
+
 app.listen(port,()=>{
-    console.log('listening to port '+port);
+    console.log('listening to port '+port,"0.0.0.0");
 });
