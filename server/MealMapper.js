@@ -30,7 +30,7 @@ async function getOneMealStack(desiredStack, mealArr, margin = .2){
         currentStack.protein += meal.protein||0;
     });
 
-    query = `select R.recipeID, R.recipe, R.link, R.calories, R.protein, R.carbs, R.fat, R.image, R.servings from 
+    query = `select R.recipeID, R.recipe, R.link, R.calories, R.protein, R.carbs, R.fat, R.image, R.servings, MG.MealGroupID from 
     
     (select * from tblMealGroups MG
     where 1=1
@@ -74,6 +74,7 @@ async function createMealPlans(desiredStack){
     let result;
     let colors = ['#e6194B', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#42d4f4', '#f032e6', '#fabebe', '#469990', '#e6beff', '#9A6324', '#fffac8', '#800000', '#aaffc3', '#000075', '#a9a9a9', '#ffffff', '#000000'];
     let counter = 0;
+    let mealGroupIds = [];
     for(let i = 0; i<7; i++){
         unsetMeals = [];
         for(let j = 0; j<mealPlan.length;j++){
@@ -82,23 +83,38 @@ async function createMealPlans(desiredStack){
             }
         }
         if(unsetMeals.length>0){
-            result = await getOneMealStack(desiredStack, getCol(mealPlan, i).filter(x=>x),1);
+            result = await getOneMealStack(desiredStack, getCol(mealPlan, i).filter(x=>x));
+
             // console.log(result);
             for(let j = 0;j<unsetMeals.length;j++){
                 result[j].mealColor = colors[(counter++)%colors.length];
                 result[j].mealNumber = counter;
+                mealGroupIds.push(result[j].MealGroupID);
                 mealPlan[unsetMeals[j]].fill(result[j],i,i+result[j].servings);
             }
         }
     }
-    return mealPlan;
+    return {
+        mealGroupIds: mealGroupIds,
+        mealPlan: mealPlan
+    };
 }
 
 router.post("/getMealplan",(req,res)=>{
-    createMealPlans(req.body).then(result=>{
-        res.end(JSON.stringify(result));
-    });
-    
+    //grab the oauth google id to get user data
+    let googleId = null;
+    if(req.session.passport){
+        googleId = req.session.passport.user.id
+    }
+
+    if(!googleId || true){
+        createMealPlans(req.body).then(result=>{
+            res.end(JSON.stringify(result.mealPlan));
+        });
+    }
+    else{
+
+    }
 });
 
 module.exports = {createMealPlans,router};

@@ -1,5 +1,5 @@
 module.exports = {
-    CrossOriginURL: encodeURI("http://localhost:4200"),
+    CrossOriginURL: encodeURI("http://localhost:8000"),
     DatabaseLogin : {
         host: 'localhost',
         port: 3306,
