@@ -45,7 +45,7 @@ async function getOneMealStack(desiredStack, mealArr, margin = .2){
         on MG.MealGroupID = GM.MealGroupID
     inner join vwRecipesWithNutrition R
         on GM.RecipeID = R.RecipeID;`;
-    console.log(query);
+    // console.log(query);
     return ConnectionManager.callSql(query);
 }
 function getCol(matrix, col){
@@ -83,7 +83,7 @@ async function createMealPlans(desiredStack){
         }
         if(unsetMeals.length>0){
             result = await getOneMealStack(desiredStack, getCol(mealPlan, i).filter(x=>x),1);
-            console.log(result);
+            // console.log(result);
             for(let j = 0;j<unsetMeals.length;j++){
                 result[j].mealColor = colors[(counter++)%colors.length];
                 result[j].mealNumber = counter;
