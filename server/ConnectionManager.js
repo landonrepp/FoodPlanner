@@ -9,7 +9,8 @@ const credentials = {
     user: 'landonrepp',
     password: 'password',
     database: 'Nutrition',
-    timeout:10
+    timeout:10,
+    multipleStatements: true
 }
 
 // initialize storedProcedureList

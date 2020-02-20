@@ -55,7 +55,8 @@ function getCol(matrix, col){
     }
     return column;
  }
-async function createMealPlans(desiredStack){
+
+async function createMealPlans(desiredStack, persistedMealPlanIds = []){
     let mealPlan = [[],[],[]];
     for(let i = 0; i<7;i++){
         for(let j = 0;j<3;j++){
@@ -83,13 +84,18 @@ async function createMealPlans(desiredStack){
             }
         }
         if(unsetMeals.length>0){
-            result = await getOneMealStack(desiredStack, getCol(mealPlan, i).filter(x=>x));
+            if(persistedMealPlanIds[counter]){
+                result = await getPersistedMealStack(persistedMealPlanIds[counter]);
+            }
+            else{
+                result = await getOneMealStack(desiredStack, getCol(mealPlan, i).filter(x=>x));
+            }
 
             // console.log(result);
+            mealGroupIds.push(result[0].MealGroupID);
             for(let j = 0;j<unsetMeals.length;j++){
                 result[j].mealColor = colors[(counter++)%colors.length];
                 result[j].mealNumber = counter;
-                mealGroupIds.push(result[j].MealGroupID);
                 mealPlan[unsetMeals[j]].fill(result[j],i,i+result[j].servings);
             }
         }
@@ -99,6 +105,46 @@ async function createMealPlans(desiredStack){
         mealPlan: mealPlan
     };
 }
+async function getPersistedMealStack(mealPlanId){
+    query = `select R.recipeID, R.recipe, R.link, R.calories, R.protein, R.carbs, R.fat, R.image, R.servings, MG.MealGroupID from 
+    
+    tblMealGroups MG
+    inner join tblGroupedMeals GM
+        on MG.MealGroupID = GM.MealGroupID
+    inner join vwRecipesWithNutrition R
+        on GM.RecipeID = R.RecipeID
+    where MG.MealGroupID = ${mealPlanId};`;
+    // console.log(query);
+    return ConnectionManager.callSql(query);
+}
+
+async function getPersistedMealPlan(userId){
+    let sql = `select mealGroupID from
+    (
+        select MAX(version) as version
+        from tblMealPlanUserData
+        where userID = ${userId}
+    ) sub
+    inner join tblMealPlanUserData MG
+    on MG.userID = ${userId}
+    and MG.version = sub.version;`
+}
+
+async function saveMealPlan(mealPlanIds, userId){
+    let sql = `CREATE TEMPORARY TABLE MealGroupIds(MealGroupId bigint);
+    insert into MealGroupIds(MealGroupId) values (${mealPlanIds.join('),(')});
+    insert into tblMealPlanUserData(version,userId,MealGroupID)
+    select version, ${userId}, mealGroupID from
+    (
+        select COALESCE(MAX(version) + 1,0) as version
+        from tblMealPlanUserData
+        where userID = ${userId}
+    ) sub
+    right join MealGroupIds MGI
+        ON 1=1;
+    drop temporary table MealGroupIds;`;
+    await ConnectionManager.callSql(sql);
+}
 
 router.post("/getMealplan",(req,res)=>{
     //grab the oauth google id to get user data
@@ -107,13 +153,19 @@ router.post("/getMealplan",(req,res)=>{
         googleId = req.session.passport.user.id
     }
 
-    if(!googleId || true){
+    if(!googleId || req.body.newPlan){
         createMealPlans(req.body).then(result=>{
             res.end(JSON.stringify(result.mealPlan));
+            return result.mealGroupIds;
+        }).then(result=>{
+            saveMealPlan(result, googleId);
         });
     }
     else{
-
+        createMealPlans(req.body).then(result=>{
+            res.end(JSON.stringify(result.mealPlan));
+            return result.mealGroupIds;
+        });
     }
 });
 
